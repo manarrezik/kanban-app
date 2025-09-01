@@ -29,7 +29,20 @@ export default function Sidebar() {
          
             <div>
          
-            
+              <div className="flex items-center gap-2 p-6">
+       
+                <img
+                  className="h-6"
+                  src={
+                    darkMode
+                      ? "./assets/logo-dark.svg"
+                      : "./assets/logo-light.svg"
+                  }
+                  alt="Kanban Logo"
+                />
+             
+              </div>
+
           
               <div className="px-6 text-xs tracking-widest text-gray-500 dark:text-gray-400">
                 ALL BOARDS ({boards.length})
