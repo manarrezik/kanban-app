@@ -1,23 +1,90 @@
-import { useState } from 'react'
-
-
-import './App.css'
+import { useState } from "react";
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar"; 
+import Sidebar from "./components/Sidebar";
+import Board from "./components/Board";
+import TaskModal from "./components/TaskModal";
+import BoardModal from "./components/BoardModal";
 
-function App() {
+export default function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
+
+  const [boards, setBoards] = useState([]); 
+  const [activeBoard, setActiveBoard] = useState(null); 
+
+  const toggleSidebar = () => setSidebarOpen((prev) => !prev);
+
+  
+  const handleCreateTask = (task) => {
+    if (!activeBoard) return;
+
+    const updatedBoards = boards.map((board) => {
+      if (board.id === activeBoard.id) {
+        return {
+          ...board,
+          columns: board.columns.map((col) =>
+            col.title === task.status
+              ? { ...col, tasks: [...col.tasks, task] }
+              : col
+          ),
+        };
+      }
+      return board;
+    });
+
+    setBoards(updatedBoards);
+    setActiveBoard(updatedBoards.find((b) => b.id === activeBoard.id)); 
+  };
+
+
+  const handleCreateBoard = (newBoard) => {
+    const boardWithColumns = {
+      ...newBoard,
+      columns: [
+        { id: 1, title: "Todo", tasks: [] },
+        { id: 2, title: "Doing", tasks: [] },
+        { id: 3, title: "Done", tasks: [] },
+      ],
+    };
+
+    setBoards([...boards, boardWithColumns]);
+    setActiveBoard(boardWithColumns); 
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Navbar /> 
-      <div className="flex">
-        <Sidebar /> 
-        <main className="flex-1 p-6">
-     
-        
-        </main>
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
+      
+      <Sidebar
+        open={sidebarOpen}
+        boards={boards}
+        onCreateBoardClick={() => setIsBoardModalOpen(true)}
+        onSelectBoard={(board) => setActiveBoard(board)}
+      />
+
+
+      <div className="flex-1 flex flex-col">
+        <Navbar
+          toggleSidebar={toggleSidebar}
+          onAddTask={() => setIsTaskModalOpen(true)}
+        />
+        <Board activeBoard={activeBoard} />
       </div>
+
+
+      <TaskModal
+        isOpen={isTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
+        onCreateTask={handleCreateTask}
+        statusOptions={activeBoard ? activeBoard.columns.map((c) => c.title) : []}
+      />
+
+
+      <BoardModal
+        isOpen={isBoardModalOpen}
+        onClose={() => setIsBoardModalOpen(false)}
+        onCreateBoard={handleCreateBoard}
+      />
     </div>
   );
 }
-
-export default App;
