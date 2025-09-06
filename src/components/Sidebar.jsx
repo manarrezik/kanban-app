@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { LayoutDashboard, EyeOff, Eye, PlusCircle } from "lucide-react";
 import dark from "../assets/icon-dark-theme.svg";
 import light from "../assets/icon-light-theme.svg";
+import boardIcon from "../assets/icon-board.svg";
 
 export default function Sidebar({
   open = true,
@@ -42,14 +43,18 @@ export default function Sidebar({
 
               <nav className="mt-4 flex flex-col">
                 {boards.map((board) => (
-                  <button
-                    key={board.id}
-                    onClick={() => onSelectBoard(board)}
-                    className="flex items-center gap-2 px-6 py-3 rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-purple-700 hover:text-white transition"
-                  >
-                    <LayoutDashboard size={18} />
-                    <span>{board.title}</span>
-                  </button>
+                 <button
+      key={board.id}
+      onClick={() => onSelectBoard(board)}
+      className="flex items-center gap-2 px-6 py-3 rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-purple-700 hover:text-white transition"
+    >
+      <img
+        src={boardIcon}   
+        alt="Board icon"
+        className="h-5 w-5"
+      />
+      <span>{board.title}</span>
+    </button>
                 ))}
 
                 
