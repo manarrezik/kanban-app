@@ -78,7 +78,16 @@ export default function App() {
           toggleSidebar={toggleSidebar}
           onAddTask={() => setIsTaskModalOpen(true)}
         />
-        <Board activeBoard={activeBoard} />
+       <Board
+  activeBoard={activeBoard}
+  onUpdateBoard={(updatedBoard) => {
+    setBoards(
+      boards.map((b) => (b.id === updatedBoard.id ? updatedBoard : b))
+    );
+    setActiveBoard(updatedBoard);
+  }}
+/>
+
       </div>
 
       
