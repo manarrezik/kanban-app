@@ -15,7 +15,7 @@ export default function App() {
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
-  
+
   const handleCreateTask = (task) => {
     if (!activeBoard) return;
 
@@ -25,7 +25,10 @@ export default function App() {
           ...board,
           columns: board.columns.map((col) =>
             col.title === task.status
-              ? { ...col, tasks: [...col.tasks, task] }
+              ? {
+                  ...col,
+                  tasks: [...col.tasks, { ...task, id: Date.now() }],
+                }
               : col
           ),
         };
@@ -37,19 +40,26 @@ export default function App() {
     setActiveBoard(updatedBoards.find((b) => b.id === activeBoard.id));
   };
 
-  
   const handleCreateBoard = (newBoard) => {
     const boardWithColumns = {
       ...newBoard,
-      columns: [
-        { id: 1, title: "Todo", tasks: [] },
-        { id: 2, title: "Doing", tasks: [] },
-        { id: 3, title: "Done", tasks: [] },
-      ],
+      columns:
+        newBoard.columns && newBoard.columns.length > 0
+          ? newBoard.columns
+          : [
+              { id: 1, title: "Todo", tasks: [] },
+              { id: 2, title: "Doing", tasks: [] },
+              { id: 3, title: "Done", tasks: [] },
+            ],
     };
 
     setBoards([...boards, boardWithColumns]);
     setActiveBoard(boardWithColumns);
+  };
+
+
+  const handleSelectBoard = (board) => {
+    setActiveBoard(board);
   };
 
   return (
@@ -59,10 +69,10 @@ export default function App() {
         open={sidebarOpen}
         boards={boards}
         onCreateBoardClick={() => setIsBoardModalOpen(true)}
-        onSelectBoard={(board) => setActiveBoard(board)}
+        onSelectBoard={handleSelectBoard}
       />
 
-      
+    
       <div className="flex-1 flex flex-col">
         <Navbar
           toggleSidebar={toggleSidebar}
@@ -79,7 +89,6 @@ export default function App() {
         statusOptions={activeBoard ? activeBoard.columns.map((c) => c.title) : []}
       />
 
-      
       <BoardModal
         isOpen={isBoardModalOpen}
         onClose={() => setIsBoardModalOpen(false)}
