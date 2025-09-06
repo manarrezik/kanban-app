@@ -10,8 +10,8 @@ export default function App() {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [isBoardModalOpen, setIsBoardModalOpen] = useState(false);
 
-  const [boards, setBoards] = useState([]); 
-  const [activeBoard, setActiveBoard] = useState(null); 
+  const [boards, setBoards] = useState([]);
+  const [activeBoard, setActiveBoard] = useState(null);
 
   const toggleSidebar = () => setSidebarOpen((prev) => !prev);
 
@@ -34,10 +34,10 @@ export default function App() {
     });
 
     setBoards(updatedBoards);
-    setActiveBoard(updatedBoards.find((b) => b.id === activeBoard.id)); 
+    setActiveBoard(updatedBoards.find((b) => b.id === activeBoard.id));
   };
 
-
+  
   const handleCreateBoard = (newBoard) => {
     const boardWithColumns = {
       ...newBoard,
@@ -49,7 +49,7 @@ export default function App() {
     };
 
     setBoards([...boards, boardWithColumns]);
-    setActiveBoard(boardWithColumns); 
+    setActiveBoard(boardWithColumns);
   };
 
   return (
@@ -62,7 +62,7 @@ export default function App() {
         onSelectBoard={(board) => setActiveBoard(board)}
       />
 
-
+      
       <div className="flex-1 flex flex-col">
         <Navbar
           toggleSidebar={toggleSidebar}
@@ -71,7 +71,7 @@ export default function App() {
         <Board activeBoard={activeBoard} />
       </div>
 
-
+      
       <TaskModal
         isOpen={isTaskModalOpen}
         onClose={() => setIsTaskModalOpen(false)}
@@ -79,7 +79,7 @@ export default function App() {
         statusOptions={activeBoard ? activeBoard.columns.map((c) => c.title) : []}
       />
 
-
+      
       <BoardModal
         isOpen={isBoardModalOpen}
         onClose={() => setIsBoardModalOpen(false)}

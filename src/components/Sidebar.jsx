@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { LayoutDashboard, EyeOff, Eye, PlusCircle } from "lucide-react";
+import dark from "../assets/icon-dark-theme.svg";
+import light from "../assets/icon-light-theme.svg";
+import check from "../assets/icon-check.svg";
 
 export default function Sidebar({
   open = true,
@@ -30,7 +33,7 @@ export default function Sidebar({
                   <button
                     key={board.id}
                     onClick={() => onSelectBoard(board)}
-                    className="flex items-center gap-2 px-6 py-3 rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
+                    className="flex items-center gap-2 px-6 py-3 rounded-r-full text-gray-700 dark:text-gray-300 hover:bg-purple-700 dark:hover:bg-gray-800"
                   >
                     <LayoutDashboard size={18} />
                     <span>{board.title}</span>

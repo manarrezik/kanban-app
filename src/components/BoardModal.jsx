@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
   const [boardName, setBoardName] = useState("");
-  const [columns, setColumns] = useState(["Todo", "Doing", "Done"]); 
+  const [columns, setColumns] = useState(["Todo", "Doing", "Done"]);
 
   if (!isOpen) return null;
 
@@ -25,7 +25,11 @@ export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
       title: boardName,
       columns: columns
         .filter((c) => c.trim() !== "")
-        .map((col) => ({ id: Date.now() + Math.random(), title: col, tasks: [] })), 
+        .map((col) => ({
+          id: Date.now() + Math.random(),
+          title: col,
+          tasks: [],
+        })),
     };
 
     onCreateBoard(newBoard);
@@ -36,17 +40,22 @@ export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60">
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-sm shadow-lg">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold">Add New Board</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            ✕
-          </button>
-        </div>
+    <div
+      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50"
+      onClick={onClose}
+    >
+      <div
+        className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-lg"
+        onClick={(e) => e.stopPropagation()}
+      >
+        
+        <h2 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">
+          Add New Board
+        </h2>
 
+        
         <form onSubmit={handleSubmit} className="space-y-4">
-       
+          
           <div>
             <label className="block text-sm font-medium">Board Name</label>
             <input
@@ -54,7 +63,7 @@ export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
               value={boardName}
               onChange={(e) => setBoardName(e.target.value)}
               placeholder="e.g. Marketing Plan"
-              className="w-full p-2 border rounded-lg dark:bg-gray-700 dark:text-white"
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
               required
             />
           </div>
@@ -69,13 +78,13 @@ export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
                   value={col}
                   onChange={(e) => handleColumnChange(idx, e.target.value)}
                   placeholder="Column name"
-                  className="flex-1 py-2 px-3 border rounded-lg dark:bg-gray-700 dark:text-white"
+                  className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
                 />
                 {columns.length > 1 && (
                   <button
                     type="button"
                     onClick={() => handleRemoveColumn(idx)}
-                    className="text-500"
+                    className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
                   >
                     ✕
                   </button>
@@ -85,13 +94,13 @@ export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
             <button
               type="button"
               onClick={handleAddColumn}
-              className="w-full bg-indigo-600 text-white py-2 rounded-lg"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg"
             >
               + Add New Column
             </button>
           </div>
 
-    
+          
           <button
             type="submit"
             className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg"
