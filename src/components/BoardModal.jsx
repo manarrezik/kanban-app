@@ -57,7 +57,7 @@ export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
         <form onSubmit={handleSubmit} className="space-y-4">
           
           <div>
-            <label className="block text-sm font-medium">Board Name</label>
+            <label className="block text-sm font-medium text-gray-900 dark:text-white">Board Name</label>
             <input
               type="text"
               value={boardName}
@@ -70,7 +70,7 @@ export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
 
           
           <div>
-            <label className="block text-sm font-medium">Board Columns</label>
+            <label className="block text-sm font-medium text-gray-900 dark:text-white">Board Columns</label>
             {columns.map((col, idx) => (
               <div key={idx} className="flex gap-2 mb-2">
                 <input
@@ -94,7 +94,7 @@ export default function BoardModal({ isOpen, onClose, onCreateBoard }) {
             <button
               type="button"
               onClick={handleAddColumn}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg text-gray-900 dark:text-white"
             >
               + Add New Column
             </button>

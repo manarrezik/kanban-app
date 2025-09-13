@@ -38,15 +38,15 @@ export default function TaskModal({ isOpen, onClose, onCreateTask, statusOptions
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg"
+        className="bg-white dark:bg-gray-800 rounded-lg p-6 w-full max-w-md shadow-lg"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-lg font-bold mb-4">Add New Task</h2>
+        <h2 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">Add New Task</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           
           <div>
-            <label className="block text-sm font-medium mb-1">Task Name</label>
+            <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">Task Name</label>
             <input
               type="text"
               value={taskName}
@@ -59,7 +59,7 @@ export default function TaskModal({ isOpen, onClose, onCreateTask, statusOptions
 
           
           <div>
-            <label className="block text-sm font-medium mb-1">Description</label>
+            <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -71,7 +71,7 @@ export default function TaskModal({ isOpen, onClose, onCreateTask, statusOptions
 
           
           <div>
-            <label className="block text-sm font-medium mb-1">Subtasks</label>
+            <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">Subtasks</label>
             {subtasks.map((subtask, index) => (
               <div key={index} className="flex gap-2 mb-2">
                 <input
@@ -84,7 +84,7 @@ export default function TaskModal({ isOpen, onClose, onCreateTask, statusOptions
                 <button
                   type="button"
                   onClick={() => handleRemoveSubtask(index)}
-                  className="text-gray-500 hover:text-red-500"
+                  className="text-gray-500 "
                 >
                   ✕
                 </button>
@@ -93,7 +93,7 @@ export default function TaskModal({ isOpen, onClose, onCreateTask, statusOptions
             <button
               type="button"
               onClick={handleAddSubtask}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-medium"
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg font-medium text-gray-900 dark:text-white"
             >
               + Add New Subtask
             </button>
@@ -101,11 +101,11 @@ export default function TaskModal({ isOpen, onClose, onCreateTask, statusOptions
 
           
           <div>
-            <label className="block text-sm font-medium mb-1">Current Status</label>
+            <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-white">Current Status</label>
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none"
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-purple-500 outline-none "
             >
               {statusOptions.length > 0 ? (
                 statusOptions.map((opt, i) => (
