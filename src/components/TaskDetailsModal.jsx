@@ -49,7 +49,7 @@ export default function TaskDetailsModal({
   
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-red-500"
+          className="absolute top-3 right-3 text-gray-500 "
         >
           ✕
         </button>

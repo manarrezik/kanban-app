@@ -55,12 +55,9 @@ export default function App() {
   const handleUpdateTask = (updatedTask) => {
     if (!activeBoard) return;
 
-    
     const newColumns = activeBoard.columns.map((col) => {
-      
       let newTasks = col.tasks.filter((t) => t.id !== updatedTask.id);
 
-      
       if (col.title === updatedTask.status) {
         newTasks = [...newTasks, updatedTask];
       }
@@ -72,13 +69,13 @@ export default function App() {
 
     setBoards(boards.map((b) => (b.id === updatedBoard.id ? updatedBoard : b)));
     setActiveBoard(updatedBoard);
-    setSelectedTask(updatedTask); 
+    setSelectedTask(updatedTask);
   };
-
 
   const handleCreateBoard = (newBoard) => {
     const boardWithColumns = {
       ...newBoard,
+      id: Date.now(), 
       columns:
         newBoard.columns && newBoard.columns.length > 0
           ? newBoard.columns
@@ -104,12 +101,14 @@ export default function App() {
         onSelectBoard={handleSelectBoard}
         darkMode={darkMode}
         setDarkMode={setDarkMode}
+        activeBoard={activeBoard} 
       />
 
       <div className="flex-1 flex flex-col">
         <Navbar
           toggleSidebar={toggleSidebar}
           onAddTask={() => setIsTaskModalOpen(true)}
+          activeBoard={activeBoard} 
         />
         <Board
           activeBoard={activeBoard}
@@ -140,7 +139,7 @@ export default function App() {
         isOpen={!!selectedTask}
         task={selectedTask}
         onClose={() => setSelectedTask(null)}
-        onUpdateTask={handleUpdateTask} 
+        onUpdateTask={handleUpdateTask}
         statusOptions={activeBoard ? activeBoard.columns.map((c) => c.title) : []}
       />
     </div>

@@ -7,6 +7,7 @@ import boardIcon from "../assets/icon-board.svg";
 export default function Sidebar({
   open = true,
   boards = [],
+  activeBoard,          
   onCreateBoardClick,
   onSelectBoard,
   darkMode,
@@ -28,34 +29,36 @@ export default function Sidebar({
       >
         {isOpen && (
           <>
-          
             <div>
               <div className="px-6 text-xs tracking-widest text-gray-500 dark:text-gray-400">
                 ALL BOARDS ({boards.length})
               </div>
 
               <nav className="mt-4 flex flex-col">
-                {boards.map((board) => (
-                  <button
-                    key={board.id}
-                    onClick={() => onSelectBoard(board)}
-                    className="flex items-center gap-2 
-                      px-6 py-3 
-                      rounded-r-full 
-                      text-gray-700 dark:text-gray-300 
-                      hover:bg-purple-600 hover:text-white 
-                      transition-colors duration-200"
-                  >
-                    <img
-                      src={boardIcon}
-                      alt="Board icon"
-                      className="h-5 w-5"
-                    />
-                    <span>{board.title}</span>
-                  </button>
-                ))}
+                {boards.map((board) => {
+                  const isActive = activeBoard?.id === board.id;
+                  return (
+                    <button
+                      key={board.id}
+                      onClick={() => onSelectBoard(board)}
+                      className={`flex items-center gap-2 
+                        px-6 py-3 rounded-r-full transition-colors duration-200
+                        ${
+                          isActive
+                            ? "bg-purple-600 text-white"
+                            : "text-gray-700 dark:text-gray-300 hover:bg-purple-600 hover:text-white"
+                        }`}
+                    >
+                      <img
+                        src={boardIcon}
+                        alt="Board icon"
+                        className="h-5 w-5"
+                      />
+                      <span>{board.title}</span>
+                    </button>
+                  );
+                })}
 
-              
                 <button
                   onClick={onCreateBoardClick}
                   className="flex items-center gap-2 
@@ -70,7 +73,7 @@ export default function Sidebar({
               </nav>
             </div>
 
-    
+            
             <div className="p-6 space-y-4">
           
               <div
@@ -78,7 +81,6 @@ export default function Sidebar({
                 bg-gray-200 dark:bg-gray-800 
                 rounded-md py-2 transition-colors duration-300"
               >
-              
                 <img
                   src={light}
                   alt="Light mode"
@@ -86,7 +88,6 @@ export default function Sidebar({
                   onClick={() => setDarkMode(false)}
                 />
 
-        
                 <button
                   onClick={() => setDarkMode((prev) => !prev)}
                   className="w-10 h-5 bg-purple-600 rounded-full flex items-center px-1"
@@ -98,7 +99,6 @@ export default function Sidebar({
                   ></div>
                 </button>
 
-            
                 <img
                   src={dark}
                   alt="Dark mode"
@@ -107,7 +107,7 @@ export default function Sidebar({
                 />
               </div>
 
-              
+            
               <button
                 onClick={() => setIsOpen(false)}
                 className="flex items-center gap-2 
@@ -123,7 +123,7 @@ export default function Sidebar({
         )}
       </div>
 
-      
+    
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
